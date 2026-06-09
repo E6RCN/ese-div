@@ -2,6 +2,9 @@
 
 setwd("~/Desktop/Manucripts/E6_diversitydynamics")
 
+# TODO: write script or add details about getting Phanerozoic occs
+# and generating other inputs
+
 #==== Data input ====#
 load('Data/Phanerozoic_clean_final.RData') #phanerozoic data
 load('Data/Reef_Ecosystem_Engineers_final.RData') #reef-builders
