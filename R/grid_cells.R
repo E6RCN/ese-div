@@ -5,9 +5,25 @@ library(tidyverse)
 load("Data/Phanerozoic_clean_final.RData")
 load("Data/marine_ecosystem_engineer_occs.RData")
 
-all_data_grid <- bin_space(all_data, spacing = 500)
+all_data_grid_100 <- bin_space(all_data, spacing = 100)
+all_data_grid_100$cell_size <- 100
+all_data_grid_275 <- bin_space(all_data, spacing = 275)
+all_data_grid_275$cell_size <- 275
+all_data_grid_725 <- bin_space(all_data, spacing = 725)
+all_data_grid_725$cell_size <- 725
+
+all_data_grid_long <- rbind(all_data_grid_100,
+                            all_data_grid_275,
+                            all_data_grid_725)
+all_data_grid <- pivot_wider(
+    all_data_grid_long,
+    names_from  = cell_size,
+    values_from = c(cell_ID, cell_centroid_lng, cell_centroid_lat)
+  )
 
 all_data_grid_stage <- bin_time(all_data_grid, bins = time_bins(), method = "mid") # majority?
+
+save(all_data_grid_stage, file = "Data/all_data_grid_stage.RData")
 
 cols <- all_data_grid_stage |>
   # filter to time-space combinations with greater than or equal to 10 occurrences
